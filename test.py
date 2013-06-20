@@ -3,3 +3,4 @@ print "hao"
 print 'me'
 print "wo"
 print "ni"
+print "cc"
