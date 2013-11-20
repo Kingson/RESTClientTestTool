@@ -8,5 +8,3 @@ RESTClientTestTool
 * jinja2
 * jsonview.js
 * bootstrap
-
-test
