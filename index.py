@@ -13,6 +13,7 @@ import os
 from creatdb import *
 import requests
 import json
+import time
 # ---------------define path: start--------------------------##
 #/favicon.ico
 
@@ -51,11 +52,13 @@ def send_image(filename):
 
 @get('/')
 def index():
-    return template('main', response="这里显示响应内容", stauts='', response_headers='', request_headers='')
+    return template('main', response="", stauts='', loading_time='', response_headers='', request_headers='')
 
 
 @post('/send')
 def send_submit():
+    start_time = time.time()
+    # print start_time
     api = request.forms.get('api', '').strip()
     method = request.forms.get('method', '').strip()
     header = request.forms.get('header', '').strip()
@@ -72,9 +75,18 @@ def send_submit():
             stauts = "404 Not Found"
         elif stauts == 500:
             stauts = "500 Internal Server Error"
-        response_headers = request_api.headers
-        request_headers = header
-        return template('main', response=responses, stauts=stauts, response_headers=response_headers, request_headers=request_headers)
+        response_headers = {"server":request_api.headers["server"],"date":request_api.headers["date"],
+                            "content-type":request_api.headers["content-type"],"connection":request_api.headers["connection"],
+                            "set-cookie":request_api.headers["set-cookie"]
+                            }
+        request_headers = {"User-Agent":request_api.request.headers["User-Agent"],
+                            "Accept-Encoding":request_api.request.headers["Accept-Encoding"],
+                            "Accept":request_api.request.headers["Accept"]
+                            }
+
+        time_span = int((time.time() - start_time) * 1000)
+        loading_time = str(time_span) + 'ms'
+        return template('main', response=responses, stauts=stauts, loading_time=loading_time, response_headers=response_headers, request_headers=request_headers)
     elif method == "post":
         url = api
         print url
@@ -90,14 +102,22 @@ def send_submit():
             stauts = "404 Not Found"
         elif stauts == 500:
             stauts = "500 Internal Server Error"
-        response_headers = request_api.headers
+        response_headers = {"server":request_api.headers["server"],"date":request_api.headers["date"],
+                            "content-type":request_api.headers["content-type"],"connection":request_api.headers["connection"],
+                            "set-cookie":request_api.headers["set-cookie"]
+                            }
         print response_headers
-        request_headers = header
+        request_headers = {"User-Agent":request_api.request.headers["User-Agent"],
+                            "Accept-Encoding":request_api.request.headers["Accept-Encoding"],
+                            "Accept":request_api.request.headers["Accept"]
+                            }
         return template('main', response=responses, stauts=stauts, response_headers=response_headers, request_headers=request_headers)
     elif method == "put":
         pass
     elif method == "delete":
         pass
+    
+
 
 
 @get('/userlist')
@@ -112,5 +132,5 @@ def show_userlist():
     return output
 
 if __name__ == '__main__':
-    debug(mode=True)
-    run()
+    #debug(mode=True)
+    run(host='10.66.39.150', port=8888)

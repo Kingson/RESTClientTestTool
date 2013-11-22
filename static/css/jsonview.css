@@ -1,7 +1,8 @@
 
 #jsonView {
   white-space: pre;
-  font-family: monospace;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  border: 1px solid #cccccc;
 }
 
 #jsonView ul {
@@ -46,7 +47,7 @@
 
 /*default theme*/
 .property {
-  font-weight: bold;
+  font-weight:bolder;
 }
 
 .type-null {
