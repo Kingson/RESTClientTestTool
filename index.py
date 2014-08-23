@@ -118,8 +118,6 @@ def send_submit():
         pass
     
 
-
-
 @get('/userlist')
 def show_userlist():
     conn = sqlite3.connect('data/books.db')
