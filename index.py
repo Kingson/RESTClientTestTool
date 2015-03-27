@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # coding=UTF-8
-#--------------------------
+# --------------------------
 # Created by PyCharm
 # Author: Kingson
 # Date: 12-8-23
 # Time: 下午9:19
 # Description: A simple books management systems for TNS.
-#--------------------------
+# --------------------------
 from bottle import *
 import sqlite3
 import os
@@ -15,7 +15,7 @@ import requests
 import json
 import time
 # ---------------define path: start--------------------------##
-#/favicon.ico
+# /favicon.ico
 
 
 @route('/favicon.ico')
@@ -23,7 +23,7 @@ def send_favicon():
     return static_file('favicon.ico',
                        root='./')
 
-#/static/css
+# /static/css
 
 
 @route('/static/css/<filename>')
@@ -32,7 +32,7 @@ def send_css(filename='bootstrap.css'):
                        root='./static/css',
                        mimetype='text/css')
 
-#/static/js
+# /static/js
 
 
 @route('/static/js/<filename>')
@@ -40,7 +40,7 @@ def send_js(filename='bootstrap.js'):
     return static_file(filename,
                        root='./static/js')
 
-#/static/images
+# /static/images
 
 
 @route('/static/images/<filename>')
@@ -102,15 +102,15 @@ def send_submit():
             stauts = "404 Not Found"
         elif stauts == 500:
             stauts = "500 Internal Server Error"
-        response_headers = {"server":request_api.headers["server"],"date":request_api.headers["date"],
-                            "content-type":request_api.headers["content-type"],"connection":request_api.headers["connection"],
-                            "set-cookie":request_api.headers["set-cookie"]
+        response_headers = {"server": request_api.headers["server"], "date": request_api.headers["date"],
+                            "content-type": request_api.headers["content-type"], "connection": request_api.headers["connection"],
+                            "set-cookie": request_api.headers["set-cookie"]
                             }
         print response_headers
         request_headers = {"User-Agent":request_api.request.headers["User-Agent"],
-                            "Accept-Encoding":request_api.request.headers["Accept-Encoding"],
-                            "Accept":request_api.request.headers["Accept"]
-                            }
+                           "Accept-Encoding":request_api.request.headers["Accept-Encoding"],
+                           "Accept":request_api.request.headers["Accept"]
+                           }
         return template('main', response=responses, stauts=stauts, response_headers=response_headers, request_headers=request_headers)
     elif method == "put":
         pass
@@ -130,5 +130,5 @@ def show_userlist():
     return output
 
 if __name__ == '__main__':
-    #debug(mode=True)
+    # debug(mode=True)
     run(host='10.66.39.150', port=8888)
